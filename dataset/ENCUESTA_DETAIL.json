@@ -1,0 +1,40 @@
+{
+	"name": "ENCUESTA_DETAIL",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "selserverCASA",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DESCARGA"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "ID_ENCUESTA",
+				"type": "varchar"
+			},
+			{
+				"name": "FECHA",
+				"type": "varchar"
+			},
+			{
+				"name": "NUM_SERVICIO",
+				"type": "varchar"
+			},
+			{
+				"name": "ID_PREGUNTA",
+				"type": "varchar"
+			},
+			{
+				"name": "RESPUESTAS",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "MTU_ENCUESTAS_DETAIL"
+		}
+	}
+}

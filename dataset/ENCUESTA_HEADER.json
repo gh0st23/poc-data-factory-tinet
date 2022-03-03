@@ -1,0 +1,112 @@
+{
+	"name": "ENCUESTA_HEADER",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "selserverCASA",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DESCARGA"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "ID_ENCUESTA",
+				"type": "varchar"
+			},
+			{
+				"name": "CORREO",
+				"type": "varchar"
+			},
+			{
+				"name": "NOMBRE",
+				"type": "varchar"
+			},
+			{
+				"name": "TELEFONO",
+				"type": "varchar"
+			},
+			{
+				"name": "FECHA",
+				"type": "varchar"
+			},
+			{
+				"name": "ENCUESTA",
+				"type": "varchar"
+			},
+			{
+				"name": "PERIODO_ANO",
+				"type": "varchar"
+			},
+			{
+				"name": "PERIODO_MES",
+				"type": "varchar"
+			},
+			{
+				"name": "EMPRESA",
+				"type": "varchar"
+			},
+			{
+				"name": "NUM_SERVICIO",
+				"type": "varchar"
+			},
+			{
+				"name": "NUM_TRAMITE",
+				"type": "varchar"
+			},
+			{
+				"name": "FECHA_INGRESO",
+				"type": "varchar"
+			},
+			{
+				"name": "FECHA_CIERRE_TRAMITE",
+				"type": "varchar"
+			},
+			{
+				"name": "ZONA",
+				"type": "varchar"
+			},
+			{
+				"name": "COMUNA",
+				"type": "varchar"
+			},
+			{
+				"name": "CANAL_INGRESO",
+				"type": "varchar"
+			},
+			{
+				"name": "RURALIDAD",
+				"type": "varchar"
+			},
+			{
+				"name": "TIPO_CORTE",
+				"type": "varchar"
+			},
+			{
+				"name": "AFECTO_CORTE",
+				"type": "varchar"
+			},
+			{
+				"name": "BRIGADA",
+				"type": "varchar"
+			},
+			{
+				"name": "VISITA_BRIGADA",
+				"type": "varchar"
+			},
+			{
+				"name": "CANAL",
+				"type": "varchar"
+			},
+			{
+				"name": "TIPO_INGRESO",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "MTU_ENCUESTAS_HEADER"
+		}
+	}
+}
