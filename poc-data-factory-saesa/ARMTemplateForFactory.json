@@ -7,13 +7,17 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "poc-data-factory-saesa"
 		},
+		"DESTINOCosmosDB_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'DESTINOCosmosDB'"
+		},
 		"selserverCASA_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'selserverCASA'"
 		},
-		"DESTINOCosmosDB_connectionString": {
+		"CARGA_DATOS_LINK_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'DESTINOCosmosDB'"
+			"metadata": "Secure string for 'connectionString' of 'CARGA_DATOS_LINK'"
 		}
 	},
 	"variables": {
@@ -21,33 +25,365 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/poc-ghosthost')]",
-			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"name": "[concat(parameters('factoryName'), '/PIPELINE_CARGA')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"type": "SelfHosted",
-				"description": "Host on premise",
-				"typeProperties": {}
+				"description": "Carga de datos desde on premise",
+				"activities": [
+					{
+						"name": "COPIAR DATOS",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"additionalColumns": [
+									{
+										"name": "ID_ENCUESTA",
+										"value": "concat(ENCUESTA, FECHA_INGRESO)"
+									}
+								],
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "CosmosDbSqlApiSink",
+								"writeBehavior": "upsert",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "ENCUESTA",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['encuesta']"
+										}
+									},
+									{
+										"source": {
+											"name": "EMPRESA",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['empresa']"
+										}
+									},
+									{
+										"source": {
+											"name": "NUMERO_SERVICIO",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['numeroServicio']"
+										}
+									},
+									{
+										"source": {
+											"name": "NOMBRE_SERVICIO",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['nombreServicio']"
+										}
+									},
+									{
+										"source": {
+											"name": "NUMERO_TRAMITE",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['numeroTramite']"
+										}
+									},
+									{
+										"source": {
+											"name": "FECHA_INGRESO",
+											"type": "DateTime"
+										},
+										"sink": {
+											"path": "$['fechaIngreso']"
+										}
+									},
+									{
+										"source": {
+											"name": "FECHA_CIERRE_TRAMITE",
+											"type": "DateTime"
+										},
+										"sink": {
+											"path": "$['fechaCierreTramite']"
+										}
+									},
+									{
+										"source": {
+											"name": "PERIODO_ANNO",
+											"type": "Int32"
+										},
+										"sink": {
+											"path": "$['periodoAnno']"
+										}
+									},
+									{
+										"source": {
+											"name": "PERIODO_MES",
+											"type": "Int32"
+										},
+										"sink": {
+											"path": "$['periodoMes']"
+										}
+									},
+									{
+										"source": {
+											"name": "TELEFONO",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['telefono']"
+										}
+									},
+									{
+										"source": {
+											"name": "CORREO_ELECTRONICO",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['correoElectronico']"
+										}
+									},
+									{
+										"source": {
+											"name": "CANAL_INGRESO",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['canalIngreso']"
+										}
+									},
+									{
+										"source": {
+											"name": "OFICINA",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['oficina']"
+										}
+									},
+									{
+										"source": {
+											"name": "ZONA_OFICINA",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['zonaOficina']"
+										}
+									},
+									{
+										"source": {
+											"name": "ZONA",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['zona']"
+										}
+									},
+									{
+										"source": {
+											"name": "COMUNA",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['comuna']"
+										}
+									},
+									{
+										"source": {
+											"name": "RURALIDAD",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['ruralidad']"
+										}
+									},
+									{
+										"source": {
+											"name": "TIPO_INGRESO",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['tipoIngreso']"
+										}
+									},
+									{
+										"source": {
+											"name": "SUBTIPO_INGRESO",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['subtipoIngreso']"
+										}
+									},
+									{
+										"source": {
+											"name": "ATENCION_BRIGADA",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['atencionBrigada']"
+										}
+									},
+									{
+										"source": {
+											"name": "SUCURSAL",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['sucursal']"
+										}
+									},
+									{
+										"source": {
+											"name": "EJECUTIVO",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['ejecutivo']"
+										}
+									},
+									{
+										"source": {
+											"name": "ESTADO_RESOLUCION",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['estadoResolucion']"
+										}
+									},
+									{
+										"source": {
+											"name": "CLASIFICACION",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['clasificacion']"
+										}
+									},
+									{
+										"source": {
+											"name": "TIPO_RESOLUCION",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['tipoResolucion']"
+										}
+									},
+									{
+										"source": {
+											"name": "BRIGADA",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['brigada']"
+										}
+									},
+									{
+										"source": {
+											"name": "TIPO_CORTE",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['tipoCorte']"
+										}
+									},
+									{
+										"source": {
+											"name": "COMUNA_ID",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['comunaId']"
+										}
+									},
+									{
+										"source": {
+											"name": "FECHA_EJECUCION",
+											"type": "DateTime"
+										},
+										"sink": {
+											"path": "$['fechaEjecucion']"
+										}
+									},
+									{
+										"source": {
+											"name": "ID_ENCUESTA"
+										},
+										"sink": {
+											"path": "$['idEncuesta']"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SQLServerCASAEncuestas",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "CosmosDbSqlApiCollection1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SQLServerCASAEncuestas')]",
+				"[concat(variables('factoryId'), '/datasets/CosmosDbSqlApiCollection1')]"
+			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/selserverCASA')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"name": "[concat(parameters('factoryName'), '/CosmosDbSqlApiCollection1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"annotations": [],
-				"type": "SqlServer",
-				"typeProperties": {
-					"connectionString": "[parameters('selserverCASA_connectionString')]"
+				"linkedServiceName": {
+					"referenceName": "DESTINOCosmosDB",
+					"type": "LinkedServiceReference"
 				},
-				"connectVia": {
-					"referenceName": "poc-ghosthost",
-					"type": "IntegrationRuntimeReference"
+				"folder": {
+					"name": "CARGA"
+				},
+				"annotations": [],
+				"type": "CosmosDbSqlApiCollection",
+				"schema": {},
+				"typeProperties": {
+					"collectionName": "encuestas"
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/poc-ghosthost')]"
+				"[concat(variables('factoryId'), '/linkedServices/DESTINOCosmosDB')]"
 			]
 		},
 		{
@@ -58,6 +394,9 @@
 				"linkedServiceName": {
 					"referenceName": "selserverCASA",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "CARGA"
 				},
 				"annotations": [],
 				"type": "SqlServerTable",
@@ -210,34 +549,81 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/CosmosDbSqlApiCollection1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
+			"name": "[concat(parameters('factoryName'), '/selserverCASA')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"linkedServiceName": {
-					"referenceName": "DESTINOCosmosDB",
-					"type": "LinkedServiceReference"
-				},
 				"annotations": [],
-				"type": "CosmosDbSqlApiCollection",
-				"schema": {},
+				"type": "SqlServer",
 				"typeProperties": {
-					"collectionName": "encuestas"
+					"connectionString": "[parameters('selserverCASA_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "poc-ghosthost",
+					"type": "IntegrationRuntimeReference"
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/DESTINOCosmosDB')]"
+				"[concat(variables('factoryId'), '/integrationRuntimes/poc-ghosthost')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/PIPELINE_CARGA')]",
+			"name": "[concat(parameters('factoryName'), '/poc-ghosthost')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "SelfHosted",
+				"description": "Host on premise",
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/cargaDatos')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "PIPELINE_CARGA",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2022-12-03T23:00:00Z",
+						"timeZone": "UTC",
+						"schedule": {
+							"minutes": [
+								0
+							],
+							"hours": [
+								23
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/PIPELINE_CARGA')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PIPELINE_DESCARGA')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"description": "Carga de datos desde on premise",
 				"activities": [
 					{
-						"name": "COPIAR DATOS",
+						"name": "SUBE_HEADER",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -250,14 +636,20 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "SqlServerSource",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureFileStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
 							},
 							"sink": {
-								"type": "CosmosDbSqlApiSink",
-								"writeBehavior": "upsert",
-								"disableMetricsCollection": false
+								"type": "SqlServerSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
 							},
 							"enableStaging": false,
 							"translator": {
@@ -265,278 +657,414 @@
 								"mappings": [
 									{
 										"source": {
-											"name": "ENCUESTA",
-											"type": "String"
+											"name": "ID_ENCUESTA",
+											"type": "String",
+											"physicalType": "String"
 										},
 										"sink": {
-											"path": "$['encuesta']"
+											"name": "ID_ENCUESTA",
+											"type": "String",
+											"physicalType": "varchar"
 										}
 									},
 									{
 										"source": {
-											"name": "EMPRESA",
-											"type": "String"
+											"name": "CORREO",
+											"type": "String",
+											"physicalType": "String"
 										},
 										"sink": {
-											"path": "$['empresa']"
+											"name": "CORREO",
+											"type": "String",
+											"physicalType": "varchar"
 										}
 									},
 									{
 										"source": {
-											"name": "NUMERO_SERVICIO",
-											"type": "String"
+											"name": "NOMBRE",
+											"type": "String",
+											"physicalType": "String"
 										},
 										"sink": {
-											"path": "$['numero_servicio']"
-										}
-									},
-									{
-										"source": {
-											"name": "NOMBRE_SERVICIO",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['nombre_servicio']"
-										}
-									},
-									{
-										"source": {
-											"name": "NUMERO_TRAMITE",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['numero_tramite']"
-										}
-									},
-									{
-										"source": {
-											"name": "FECHA_INGRESO",
-											"type": "DateTime"
-										},
-										"sink": {
-											"path": "$['fecha_ingreso']"
-										}
-									},
-									{
-										"source": {
-											"name": "FECHA_CIERRE_TRAMITE",
-											"type": "DateTime"
-										},
-										"sink": {
-											"path": "$['fecha_cierre_tramite']"
-										}
-									},
-									{
-										"source": {
-											"name": "PERIODO_ANNO",
-											"type": "Int32"
-										},
-										"sink": {
-											"path": "$['periodo_anno']"
-										}
-									},
-									{
-										"source": {
-											"name": "PERIODO_MES",
-											"type": "Int32"
-										},
-										"sink": {
-											"path": "$['periodo_mes']"
+											"name": "NOMBRE",
+											"type": "String",
+											"physicalType": "varchar"
 										}
 									},
 									{
 										"source": {
 											"name": "TELEFONO",
-											"type": "String"
+											"type": "String",
+											"physicalType": "String"
 										},
 										"sink": {
-											"path": "$['telefono']"
+											"name": "TELEFONO",
+											"type": "String",
+											"physicalType": "varchar"
 										}
 									},
 									{
 										"source": {
-											"name": "CORREO_ELECTRONICO",
-											"type": "String"
+											"name": "FECHA",
+											"type": "String",
+											"physicalType": "String"
 										},
 										"sink": {
-											"path": "$['correo_electronico']"
+											"name": "FECHA",
+											"type": "String",
+											"physicalType": "varchar"
 										}
 									},
 									{
 										"source": {
-											"name": "CANAL_INGRESO",
-											"type": "String"
+											"name": "ENCUESTA",
+											"type": "String",
+											"physicalType": "String"
 										},
 										"sink": {
-											"path": "$['canal_ingreso']"
+											"name": "ENCUESTA",
+											"type": "String",
+											"physicalType": "varchar"
 										}
 									},
 									{
 										"source": {
-											"name": "OFICINA",
-											"type": "String"
+											"name": "PERIODO_ANO",
+											"type": "String",
+											"physicalType": "String"
 										},
 										"sink": {
-											"path": "$['oficina']"
+											"name": "PERIODO_ANO",
+											"type": "String",
+											"physicalType": "varchar"
 										}
 									},
 									{
 										"source": {
-											"name": "ZONA_OFICINA",
-											"type": "String"
+											"name": "PERIODO_MES",
+											"type": "String",
+											"physicalType": "String"
 										},
 										"sink": {
-											"path": "$['zona_oficina']"
+											"name": "PERIODO_MES",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "EMPRESA",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "EMPRESA",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "NUM_SERVICIO",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "NUM_SERVICIO",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "NUM_TRAMITE",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "NUM_TRAMITE",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "FECHA_INGRESO",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "FECHA_INGRESO",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "FECHA_CIERRE_TRAMITE",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "FECHA_CIERRE_TRAMITE",
+											"type": "String",
+											"physicalType": "varchar"
 										}
 									},
 									{
 										"source": {
 											"name": "ZONA",
-											"type": "String"
+											"type": "String",
+											"physicalType": "String"
 										},
 										"sink": {
-											"path": "$['zona']"
+											"name": "ZONA",
+											"type": "String",
+											"physicalType": "varchar"
 										}
 									},
 									{
 										"source": {
 											"name": "COMUNA",
-											"type": "String"
+											"type": "String",
+											"physicalType": "String"
 										},
 										"sink": {
-											"path": "$['comuna']"
+											"name": "COMUNA",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CANAL_INGRESO",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "CANAL_INGRESO",
+											"type": "String",
+											"physicalType": "varchar"
 										}
 									},
 									{
 										"source": {
 											"name": "RURALIDAD",
-											"type": "String"
+											"type": "String",
+											"physicalType": "String"
 										},
 										"sink": {
-											"path": "$['ruralidad']"
-										}
-									},
-									{
-										"source": {
-											"name": "TIPO_INGRESO",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['tipo_ingreso']"
-										}
-									},
-									{
-										"source": {
-											"name": "SUBTIPO_INGRESO",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['subtipo_ingreso']"
-										}
-									},
-									{
-										"source": {
-											"name": "ATENCION_BRIGADA",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['atencion_brigada']"
-										}
-									},
-									{
-										"source": {
-											"name": "SUCURSAL",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['sucursal']"
-										}
-									},
-									{
-										"source": {
-											"name": "EJECUTIVO",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['ejecutivo']"
-										}
-									},
-									{
-										"source": {
-											"name": "ESTADO_RESOLUCION",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['estado_resolucion']"
-										}
-									},
-									{
-										"source": {
-											"name": "CLASIFICACION",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['clasificacion']"
-										}
-									},
-									{
-										"source": {
-											"name": "TIPO_RESOLUCION",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['tipo_resolucion']"
-										}
-									},
-									{
-										"source": {
-											"name": "BRIGADA",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['brigada']"
+											"name": "RURALIDAD",
+											"type": "String",
+											"physicalType": "varchar"
 										}
 									},
 									{
 										"source": {
 											"name": "TIPO_CORTE",
-											"type": "String"
+											"type": "String",
+											"physicalType": "String"
 										},
 										"sink": {
-											"path": "$['tipo_corte']"
+											"name": "TIPO_CORTE",
+											"type": "String",
+											"physicalType": "varchar"
 										}
 									},
 									{
 										"source": {
-											"name": "COMUNA_ID",
-											"type": "String"
+											"name": "AFECTO_CORTE",
+											"type": "String",
+											"physicalType": "String"
 										},
 										"sink": {
-											"path": "$['comuna_id']"
+											"name": "AFECTO_CORTE",
+											"type": "String",
+											"physicalType": "varchar"
 										}
 									},
 									{
 										"source": {
-											"name": "FECHA_EJECUCION",
-											"type": "DateTime"
+											"name": "BRIGADA",
+											"type": "String",
+											"physicalType": "String"
 										},
 										"sink": {
-											"path": "$['fecha_ejecucion']"
+											"name": "BRIGADA",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "VISITA_BRIGADA",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "VISITA_BRIGADA",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CANAL",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "CANAL",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "TIPO_INGRESO",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "TIPO_INGRESO",
+											"type": "String",
+											"physicalType": "varchar"
 										}
 									}
-								]
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
 							}
 						},
 						"inputs": [
 							{
-								"referenceName": "SQLServerCASAEncuestas",
+								"referenceName": "CARGA_DATOS",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "CosmosDbSqlApiCollection1",
+								"referenceName": "ENCUESTA_HEADER",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "SUBE_DETAIL",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureFileStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "SqlServerSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "ID_ENCUESTA",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "ID_ENCUESTA",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "FECHA",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "FECHA",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "NUM_SERVICIO",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "NUM_SERVICIO",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ID_PREGUNTA",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "ID_PREGUNTA",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "RESPUESTAS",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "RESPUESTAS",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "CARGA_DATOS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ENCUESTA_DETAIL",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -550,8 +1078,316 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SQLServerCASAEncuestas')]",
-				"[concat(variables('factoryId'), '/datasets/CosmosDbSqlApiCollection1')]"
+				"[concat(variables('factoryId'), '/datasets/CARGA_DATOS')]",
+				"[concat(variables('factoryId'), '/datasets/ENCUESTA_HEADER')]",
+				"[concat(variables('factoryId'), '/datasets/ENCUESTA_DETAIL')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CARGA_DATOS_LINK')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureFileStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('CARGA_DATOS_LINK_connectionString')]",
+					"fileShare": "share-carga"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CARGA_DATOS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "CARGA_DATOS_LINK",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "DESCARGA"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureFileStorageLocation",
+						"fileName": "datos2022-02-28T18_55_47.558554500.csv"
+					},
+					"columnDelimiter": ";",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "ID_ENCUESTA",
+						"type": "String"
+					},
+					{
+						"name": "CORREO",
+						"type": "String"
+					},
+					{
+						"name": "NOMBRE",
+						"type": "String"
+					},
+					{
+						"name": "TELEFONO",
+						"type": "String"
+					},
+					{
+						"name": "FECHA",
+						"type": "String"
+					},
+					{
+						"name": "ENCUESTA",
+						"type": "String"
+					},
+					{
+						"name": "PERIODO_ANO",
+						"type": "String"
+					},
+					{
+						"name": "PERIODO_MES",
+						"type": "String"
+					},
+					{
+						"name": "EMPRESA",
+						"type": "String"
+					},
+					{
+						"name": "NUM_SERVICIO",
+						"type": "String"
+					},
+					{
+						"name": "NUM_TRAMITE",
+						"type": "String"
+					},
+					{
+						"name": "FECHA_INGRESO",
+						"type": "String"
+					},
+					{
+						"name": "FECHA_CIERRE_TRAMITE",
+						"type": "String"
+					},
+					{
+						"name": "ZONA",
+						"type": "String"
+					},
+					{
+						"name": "COMUNA",
+						"type": "String"
+					},
+					{
+						"name": "CANAL_INGRESO",
+						"type": "String"
+					},
+					{
+						"name": "RURALIDAD",
+						"type": "String"
+					},
+					{
+						"name": "TIPO_CORTE",
+						"type": "String"
+					},
+					{
+						"name": "AFECTO_CORTE",
+						"type": "String"
+					},
+					{
+						"name": "BRIGADA",
+						"type": "String"
+					},
+					{
+						"name": "VISITA_BRIGADA",
+						"type": "String"
+					},
+					{
+						"name": "CANAL",
+						"type": "String"
+					},
+					{
+						"name": "TIPO_INGRESO",
+						"type": "String"
+					},
+					{
+						"name": "ID_PREGUNTA",
+						"type": "String"
+					},
+					{
+						"name": "RESPUESTAS",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/CARGA_DATOS_LINK')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ENCUESTA_HEADER')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "selserverCASA",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "DESCARGA"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "ID_ENCUESTA",
+						"type": "varchar"
+					},
+					{
+						"name": "CORREO",
+						"type": "varchar"
+					},
+					{
+						"name": "NOMBRE",
+						"type": "varchar"
+					},
+					{
+						"name": "TELEFONO",
+						"type": "varchar"
+					},
+					{
+						"name": "FECHA",
+						"type": "varchar"
+					},
+					{
+						"name": "ENCUESTA",
+						"type": "varchar"
+					},
+					{
+						"name": "PERIODO_ANO",
+						"type": "varchar"
+					},
+					{
+						"name": "PERIODO_MES",
+						"type": "varchar"
+					},
+					{
+						"name": "EMPRESA",
+						"type": "varchar"
+					},
+					{
+						"name": "NUM_SERVICIO",
+						"type": "varchar"
+					},
+					{
+						"name": "NUM_TRAMITE",
+						"type": "varchar"
+					},
+					{
+						"name": "FECHA_INGRESO",
+						"type": "varchar"
+					},
+					{
+						"name": "FECHA_CIERRE_TRAMITE",
+						"type": "varchar"
+					},
+					{
+						"name": "ZONA",
+						"type": "varchar"
+					},
+					{
+						"name": "COMUNA",
+						"type": "varchar"
+					},
+					{
+						"name": "CANAL_INGRESO",
+						"type": "varchar"
+					},
+					{
+						"name": "RURALIDAD",
+						"type": "varchar"
+					},
+					{
+						"name": "TIPO_CORTE",
+						"type": "varchar"
+					},
+					{
+						"name": "AFECTO_CORTE",
+						"type": "varchar"
+					},
+					{
+						"name": "BRIGADA",
+						"type": "varchar"
+					},
+					{
+						"name": "VISITA_BRIGADA",
+						"type": "varchar"
+					},
+					{
+						"name": "CANAL",
+						"type": "varchar"
+					},
+					{
+						"name": "TIPO_INGRESO",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "MTU_ENCUESTAS_HEADER"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/selserverCASA')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ENCUESTA_DETAIL')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "selserverCASA",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "DESCARGA"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "ID_ENCUESTA",
+						"type": "varchar"
+					},
+					{
+						"name": "FECHA",
+						"type": "varchar"
+					},
+					{
+						"name": "NUM_SERVICIO",
+						"type": "varchar"
+					},
+					{
+						"name": "ID_PREGUNTA",
+						"type": "varchar"
+					},
+					{
+						"name": "RESPUESTAS",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "MTU_ENCUESTAS_DETAIL"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/selserverCASA')]"
 			]
 		}
 	]

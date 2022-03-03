@@ -7,13 +7,17 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "poc-data-factory-saesa"
 		},
+		"DESTINOCosmosDB_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'DESTINOCosmosDB'"
+		},
 		"selserverCASA_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'selserverCASA'"
 		},
-		"DESTINOCosmosDB_connectionString": {
+		"CARGA_DATOS_LINK_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'DESTINOCosmosDB'"
+			"metadata": "Secure string for 'connectionString' of 'CARGA_DATOS_LINK'"
 		},
 		"containerUri": {
 			"type": "string",
@@ -44,6 +48,9 @@
 					},
 					"DESTINOCosmosDB_connectionString": {
 						"value": "[parameters('DESTINOCosmosDB_connectionString')]"
+					},
+					"CARGA_DATOS_LINK_connectionString": {
+						"value": "[parameters('CARGA_DATOS_LINK_connectionString')]"
 					},
 					"selserverCASA_connectionString": {
 						"value": "[parameters('selserverCASA_connectionString')]"

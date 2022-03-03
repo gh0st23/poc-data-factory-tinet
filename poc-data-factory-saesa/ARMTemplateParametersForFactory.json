@@ -5,10 +5,13 @@
 		"factoryName": {
 			"value": "poc-data-factory-saesa"
 		},
+		"DESTINOCosmosDB_connectionString": {
+			"value": ""
+		},
 		"selserverCASA_connectionString": {
 			"value": ""
 		},
-		"DESTINOCosmosDB_connectionString": {
+		"CARGA_DATOS_LINK_connectionString": {
 			"value": ""
 		}
 	}
