@@ -1,0 +1,311 @@
+{
+	"name": "pipeline1",
+	"properties": {
+		"activities": [
+			{
+				"name": "COPIAR DATOS",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "CosmosDbSqlApiSink",
+						"writeBehavior": "insert"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "ENCUESTA",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['encuesta']"
+								}
+							},
+							{
+								"source": {
+									"name": "EMPRESA",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['empresa']"
+								}
+							},
+							{
+								"source": {
+									"name": "NUMERO_SERVICIO",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['numero_servicio']"
+								}
+							},
+							{
+								"source": {
+									"name": "NOMBRE_SERVICIO",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['nombre_servicio']"
+								}
+							},
+							{
+								"source": {
+									"name": "NUMERO_TRAMITE",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['numero_tramite']"
+								}
+							},
+							{
+								"source": {
+									"name": "FECHA_INGRESO",
+									"type": "DateTime"
+								},
+								"sink": {
+									"path": "$['fecha_ingreso']"
+								}
+							},
+							{
+								"source": {
+									"name": "FECHA_CIERRE_TRAMITE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"path": "$['fecha_cierre_tramite']"
+								}
+							},
+							{
+								"source": {
+									"name": "PERIODO_ANNO",
+									"type": "Int32"
+								},
+								"sink": {
+									"path": "$['periodo_anno']"
+								}
+							},
+							{
+								"source": {
+									"name": "PERIODO_MES",
+									"type": "Int32"
+								},
+								"sink": {
+									"path": "$['periodo_mes']"
+								}
+							},
+							{
+								"source": {
+									"name": "TELEFONO",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['telefono']"
+								}
+							},
+							{
+								"source": {
+									"name": "CORREO_ELECTRONICO",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['correo_electronico']"
+								}
+							},
+							{
+								"source": {
+									"name": "CANAL_INGRESO",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['canal_ingreso']"
+								}
+							},
+							{
+								"source": {
+									"name": "OFICINA",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['oficina']"
+								}
+							},
+							{
+								"source": {
+									"name": "ZONA_OFICINA",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['zona_oficina']"
+								}
+							},
+							{
+								"source": {
+									"name": "ZONA",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['zona']"
+								}
+							},
+							{
+								"source": {
+									"name": "COMUNA",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['comuna']"
+								}
+							},
+							{
+								"source": {
+									"name": "RURALIDAD",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['ruralidad']"
+								}
+							},
+							{
+								"source": {
+									"name": "TIPO_INGRESO",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['tipo_ingreso']"
+								}
+							},
+							{
+								"source": {
+									"name": "SUBTIPO_INGRESO",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['subtipo_ingreso']"
+								}
+							},
+							{
+								"source": {
+									"name": "ATENCION_BRIGADA",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['atencion_brigada']"
+								}
+							},
+							{
+								"source": {
+									"name": "SUCURSAL",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['sucursal']"
+								}
+							},
+							{
+								"source": {
+									"name": "EJECUTIVO",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['ejecutivo']"
+								}
+							},
+							{
+								"source": {
+									"name": "ESTADO_RESOLUCION",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['estado_resolucion']"
+								}
+							},
+							{
+								"source": {
+									"name": "CLASIFICACION",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['clasificacion']"
+								}
+							},
+							{
+								"source": {
+									"name": "TIPO_RESOLUCION",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['tipo_resolucion']"
+								}
+							},
+							{
+								"source": {
+									"name": "BRIGADA",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['brigada']"
+								}
+							},
+							{
+								"source": {
+									"name": "TIPO_CORTE",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['tipo_corte']"
+								}
+							},
+							{
+								"source": {
+									"name": "COMUNA_ID",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['comuna_id']"
+								}
+							},
+							{
+								"source": {
+									"name": "FECHA_EJECUCION",
+									"type": "DateTime"
+								},
+								"sink": {
+									"path": "$['fecha_ejecucion']"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SQLServerCASAEncuestas",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "CosmosDbSqlApiCollection1",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
