@@ -1,6 +1,7 @@
 {
-	"name": "pipeline1",
+	"name": "PIPELINE_CARGA",
 	"properties": {
+		"description": "Carga de datos desde on premise",
 		"activities": [
 			{
 				"name": "COPIAR DATOS",
