@@ -18,6 +18,12 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
+						"additionalColumns": [
+							{
+								"name": "ID_ENCUESTA",
+								"value": "concat(ENCUESTA, EMPRESA)"
+							}
+						],
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
