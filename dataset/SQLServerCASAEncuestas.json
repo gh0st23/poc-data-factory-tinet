@@ -1,0 +1,141 @@
+{
+	"name": "SQLServerCASAEncuestas",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "selserverCASA",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "ENCUESTA",
+				"type": "varchar"
+			},
+			{
+				"name": "EMPRESA",
+				"type": "varchar"
+			},
+			{
+				"name": "NUMERO_SERVICIO",
+				"type": "varchar"
+			},
+			{
+				"name": "NOMBRE_SERVICIO",
+				"type": "varchar"
+			},
+			{
+				"name": "NUMERO_TRAMITE",
+				"type": "varchar"
+			},
+			{
+				"name": "FECHA_INGRESO",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "FECHA_CIERRE_TRAMITE",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "PERIODO_ANNO",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "PERIODO_MES",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "TELEFONO",
+				"type": "varchar"
+			},
+			{
+				"name": "CORREO_ELECTRONICO",
+				"type": "varchar"
+			},
+			{
+				"name": "CANAL_INGRESO",
+				"type": "varchar"
+			},
+			{
+				"name": "OFICINA",
+				"type": "varchar"
+			},
+			{
+				"name": "ZONA_OFICINA",
+				"type": "varchar"
+			},
+			{
+				"name": "ZONA",
+				"type": "varchar"
+			},
+			{
+				"name": "COMUNA",
+				"type": "varchar"
+			},
+			{
+				"name": "RURALIDAD",
+				"type": "varchar"
+			},
+			{
+				"name": "TIPO_INGRESO",
+				"type": "varchar"
+			},
+			{
+				"name": "SUBTIPO_INGRESO",
+				"type": "varchar"
+			},
+			{
+				"name": "ATENCION_BRIGADA",
+				"type": "varchar"
+			},
+			{
+				"name": "SUCURSAL",
+				"type": "varchar"
+			},
+			{
+				"name": "EJECUTIVO",
+				"type": "varchar"
+			},
+			{
+				"name": "ESTADO_RESOLUCION",
+				"type": "varchar"
+			},
+			{
+				"name": "CLASIFICACION",
+				"type": "varchar"
+			},
+			{
+				"name": "TIPO_RESOLUCION",
+				"type": "varchar"
+			},
+			{
+				"name": "BRIGADA",
+				"type": "varchar"
+			},
+			{
+				"name": "TIPO_CORTE",
+				"type": "varchar"
+			},
+			{
+				"name": "COMUNA_ID",
+				"type": "varchar"
+			},
+			{
+				"name": "FECHA_EJECUCION",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "ENCUESTAS"
+		}
+	}
+}
