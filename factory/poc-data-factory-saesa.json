@@ -1,0 +1,9 @@
+{
+	"name": "poc-data-factory-saesa",
+	"location": "westus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "bea16878-a445-4d0e-b789-fc95db075634",
+		"tenantId": "2a014ea1-fa8f-41db-9d5d-8222eba4e0de"
+	}
+}
