@@ -1,0 +1,127 @@
+{
+	"name": "CARGA_DATOS_BLOB",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "CARGA_DATOS_BLOB",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DESCARGA"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "datos2022-02-28T18_55_47.558554500.csv",
+				"container": "subida"
+			},
+			"columnDelimiter": ";",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "ID_ENCUESTA",
+				"type": "String"
+			},
+			{
+				"name": "CORREO",
+				"type": "String"
+			},
+			{
+				"name": "NOMBRE",
+				"type": "String"
+			},
+			{
+				"name": "TELEFONO",
+				"type": "String"
+			},
+			{
+				"name": "FECHA",
+				"type": "String"
+			},
+			{
+				"name": "ENCUESTA",
+				"type": "String"
+			},
+			{
+				"name": "PERIODO_ANO",
+				"type": "String"
+			},
+			{
+				"name": "PERIODO_MES",
+				"type": "String"
+			},
+			{
+				"name": "EMPRESA",
+				"type": "String"
+			},
+			{
+				"name": "NUM_SERVICIO",
+				"type": "String"
+			},
+			{
+				"name": "NUM_TRAMITE",
+				"type": "String"
+			},
+			{
+				"name": "FECHA_INGRESO",
+				"type": "String"
+			},
+			{
+				"name": "FECHA_CIERRE_TRAMITE",
+				"type": "String"
+			},
+			{
+				"name": "ZONA",
+				"type": "String"
+			},
+			{
+				"name": "COMUNA",
+				"type": "String"
+			},
+			{
+				"name": "CANAL_INGRESO",
+				"type": "String"
+			},
+			{
+				"name": "RURALIDAD",
+				"type": "String"
+			},
+			{
+				"name": "TIPO_CORTE",
+				"type": "String"
+			},
+			{
+				"name": "AFECTO_CORTE",
+				"type": "String"
+			},
+			{
+				"name": "BRIGADA",
+				"type": "String"
+			},
+			{
+				"name": "VISITA_BRIGADA",
+				"type": "String"
+			},
+			{
+				"name": "CANAL",
+				"type": "String"
+			},
+			{
+				"name": "TIPO_INGRESO",
+				"type": "String"
+			},
+			{
+				"name": "ID_PREGUNTA",
+				"type": "String"
+			},
+			{
+				"name": "RESPUESTAS",
+				"type": "String"
+			}
+		]
+	}
+}
