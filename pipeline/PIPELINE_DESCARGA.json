@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "SUBE_HEADER",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -26,11 +26,308 @@
 							"type": "DelimitedTextReadSettings"
 						}
 					},
-					"enableStaging": false
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "ID_ENCUESTA",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ID_ENCUESTA",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CORREO",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "CORREO",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "NOMBRE",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "NOMBRE",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "TELEFONO",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "TELEFONO",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "FECHA",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "FECHA",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ENCUESTA",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ENCUESTA",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PERIODO_ANO",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PERIODO_ANO",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PERIODO_MES",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PERIODO_MES",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "EMPRESA",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "EMPRESA",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "NUM_SERVICIO",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "NUM_SERVICIO",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "NUM_TRAMITE",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "NUM_TRAMITE",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "FECHA_INGRESO",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "FECHA_INGRESO",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "FECHA_CIERRE_TRAMITE",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "FECHA_CIERRE_TRAMITE",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ZONA",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ZONA",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "COMUNA",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "COMUNA",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CANAL_INGRESO",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "CANAL_INGRESO",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "RURALIDAD",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RURALIDAD",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "TIPO_CORTE",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "TIPO_CORTE",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "AFECTO_CORTE",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "AFECTO_CORTE",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "BRIGADA",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "BRIGADA",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "VISITA_BRIGADA",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "VISITA_BRIGADA",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CANAL",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "CANAL",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "TIPO_INGRESO",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "TIPO_INGRESO",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
 						"referenceName": "CARGA_DATOS",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ENCUESTA_HEADER",
 						"type": "DatasetReference"
 					}
 				]
