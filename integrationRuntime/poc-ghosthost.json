@@ -1,0 +1,7 @@
+{
+	"name": "poc-ghosthost",
+	"properties": {
+		"type": "SelfHosted",
+		"description": "Host on premise"
+	}
+}
