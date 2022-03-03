@@ -5,6 +5,9 @@
 			"referenceName": "selserverCASA",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "CARGA"
+		},
 		"annotations": [],
 		"type": "SqlServerTable",
 		"schema": [

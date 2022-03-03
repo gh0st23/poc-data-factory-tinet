@@ -5,6 +5,9 @@
 			"referenceName": "DESTINOCosmosDB",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "CARGA"
+		},
 		"annotations": [],
 		"type": "CosmosDbSqlApiCollection",
 		"schema": {},
