@@ -1,0 +1,25 @@
+{
+	"name": "descargaDatos",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "PIPELINE_DESCARGA",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/subida/blobs/datos",
+			"blobPathEndsWith": "csv",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/21b7feb8-4299-4cd2-b1bc-5082973503f4/resourceGroups/poc-data-factory/providers/Microsoft.Storage/storageAccounts/pocdatafactorytinet",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}
