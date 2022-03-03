@@ -1,5 +1,5 @@
 {
-	"name": "dataflow1",
+	"name": "CARGA_DE_DATOS",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
