@@ -1,0 +1,558 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "poc-data-factory-saesa"
+		},
+		"DESTINOCosmosDB_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'DESTINOCosmosDB'"
+		},
+		"selserverCASA_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'selserverCASA'"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/poc-ghosthost')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "SelfHosted",
+				"description": "Host on premise",
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DESTINOCosmosDB')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "CosmosDb",
+				"typeProperties": {
+					"connectionString": "[parameters('DESTINOCosmosDB_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/selserverCASA')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"connectionString": "[parameters('selserverCASA_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "poc-ghosthost",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/poc-ghosthost')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CosmosDbSqlApiCollection1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "DESTINOCosmosDB",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "CosmosDbSqlApiCollection",
+				"schema": {},
+				"typeProperties": {
+					"collectionName": "encuestas"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/DESTINOCosmosDB')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SQLServerCASAEncuestas')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "selserverCASA",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "ENCUESTA",
+						"type": "varchar"
+					},
+					{
+						"name": "EMPRESA",
+						"type": "varchar"
+					},
+					{
+						"name": "NUMERO_SERVICIO",
+						"type": "varchar"
+					},
+					{
+						"name": "NOMBRE_SERVICIO",
+						"type": "varchar"
+					},
+					{
+						"name": "NUMERO_TRAMITE",
+						"type": "varchar"
+					},
+					{
+						"name": "FECHA_INGRESO",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "FECHA_CIERRE_TRAMITE",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "PERIODO_ANNO",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "PERIODO_MES",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "TELEFONO",
+						"type": "varchar"
+					},
+					{
+						"name": "CORREO_ELECTRONICO",
+						"type": "varchar"
+					},
+					{
+						"name": "CANAL_INGRESO",
+						"type": "varchar"
+					},
+					{
+						"name": "OFICINA",
+						"type": "varchar"
+					},
+					{
+						"name": "ZONA_OFICINA",
+						"type": "varchar"
+					},
+					{
+						"name": "ZONA",
+						"type": "varchar"
+					},
+					{
+						"name": "COMUNA",
+						"type": "varchar"
+					},
+					{
+						"name": "RURALIDAD",
+						"type": "varchar"
+					},
+					{
+						"name": "TIPO_INGRESO",
+						"type": "varchar"
+					},
+					{
+						"name": "SUBTIPO_INGRESO",
+						"type": "varchar"
+					},
+					{
+						"name": "ATENCION_BRIGADA",
+						"type": "varchar"
+					},
+					{
+						"name": "SUCURSAL",
+						"type": "varchar"
+					},
+					{
+						"name": "EJECUTIVO",
+						"type": "varchar"
+					},
+					{
+						"name": "ESTADO_RESOLUCION",
+						"type": "varchar"
+					},
+					{
+						"name": "CLASIFICACION",
+						"type": "varchar"
+					},
+					{
+						"name": "TIPO_RESOLUCION",
+						"type": "varchar"
+					},
+					{
+						"name": "BRIGADA",
+						"type": "varchar"
+					},
+					{
+						"name": "TIPO_CORTE",
+						"type": "varchar"
+					},
+					{
+						"name": "COMUNA_ID",
+						"type": "varchar"
+					},
+					{
+						"name": "FECHA_EJECUCION",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "ENCUESTAS"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/selserverCASA')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PIPELINE_CARGA')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Carga de datos desde on premise",
+				"activities": [
+					{
+						"name": "COPIAR DATOS",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "CosmosDbSqlApiSink",
+								"writeBehavior": "upsert",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "ENCUESTA",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['encuesta']"
+										}
+									},
+									{
+										"source": {
+											"name": "EMPRESA",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['empresa']"
+										}
+									},
+									{
+										"source": {
+											"name": "NUMERO_SERVICIO",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['numero_servicio']"
+										}
+									},
+									{
+										"source": {
+											"name": "NOMBRE_SERVICIO",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['nombre_servicio']"
+										}
+									},
+									{
+										"source": {
+											"name": "NUMERO_TRAMITE",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['numero_tramite']"
+										}
+									},
+									{
+										"source": {
+											"name": "FECHA_INGRESO",
+											"type": "DateTime"
+										},
+										"sink": {
+											"path": "$['fecha_ingreso']"
+										}
+									},
+									{
+										"source": {
+											"name": "FECHA_CIERRE_TRAMITE",
+											"type": "DateTime"
+										},
+										"sink": {
+											"path": "$['fecha_cierre_tramite']"
+										}
+									},
+									{
+										"source": {
+											"name": "PERIODO_ANNO",
+											"type": "Int32"
+										},
+										"sink": {
+											"path": "$['periodo_anno']"
+										}
+									},
+									{
+										"source": {
+											"name": "PERIODO_MES",
+											"type": "Int32"
+										},
+										"sink": {
+											"path": "$['periodo_mes']"
+										}
+									},
+									{
+										"source": {
+											"name": "TELEFONO",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['telefono']"
+										}
+									},
+									{
+										"source": {
+											"name": "CORREO_ELECTRONICO",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['correo_electronico']"
+										}
+									},
+									{
+										"source": {
+											"name": "CANAL_INGRESO",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['canal_ingreso']"
+										}
+									},
+									{
+										"source": {
+											"name": "OFICINA",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['oficina']"
+										}
+									},
+									{
+										"source": {
+											"name": "ZONA_OFICINA",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['zona_oficina']"
+										}
+									},
+									{
+										"source": {
+											"name": "ZONA",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['zona']"
+										}
+									},
+									{
+										"source": {
+											"name": "COMUNA",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['comuna']"
+										}
+									},
+									{
+										"source": {
+											"name": "RURALIDAD",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['ruralidad']"
+										}
+									},
+									{
+										"source": {
+											"name": "TIPO_INGRESO",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['tipo_ingreso']"
+										}
+									},
+									{
+										"source": {
+											"name": "SUBTIPO_INGRESO",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['subtipo_ingreso']"
+										}
+									},
+									{
+										"source": {
+											"name": "ATENCION_BRIGADA",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['atencion_brigada']"
+										}
+									},
+									{
+										"source": {
+											"name": "SUCURSAL",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['sucursal']"
+										}
+									},
+									{
+										"source": {
+											"name": "EJECUTIVO",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['ejecutivo']"
+										}
+									},
+									{
+										"source": {
+											"name": "ESTADO_RESOLUCION",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['estado_resolucion']"
+										}
+									},
+									{
+										"source": {
+											"name": "CLASIFICACION",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['clasificacion']"
+										}
+									},
+									{
+										"source": {
+											"name": "TIPO_RESOLUCION",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['tipo_resolucion']"
+										}
+									},
+									{
+										"source": {
+											"name": "BRIGADA",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['brigada']"
+										}
+									},
+									{
+										"source": {
+											"name": "TIPO_CORTE",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['tipo_corte']"
+										}
+									},
+									{
+										"source": {
+											"name": "COMUNA_ID",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['comuna_id']"
+										}
+									},
+									{
+										"source": {
+											"name": "FECHA_EJECUCION",
+											"type": "DateTime"
+										},
+										"sink": {
+											"path": "$['fecha_ejecucion']"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SQLServerCASAEncuestas",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "CosmosDbSqlApiCollection1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SQLServerCASAEncuestas')]",
+				"[concat(variables('factoryId'), '/datasets/CosmosDbSqlApiCollection1')]"
+			]
+		}
+	]
+}
