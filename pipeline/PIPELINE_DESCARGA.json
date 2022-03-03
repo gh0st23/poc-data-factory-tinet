@@ -18,7 +18,7 @@
 					"source": {
 						"type": "DelimitedTextSource",
 						"storeSettings": {
-							"type": "AzureFileStorageReadSettings",
+							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
 							"enablePartitionDiscovery": false
 						},
@@ -321,7 +321,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "CARGA_DATOS",
+						"referenceName": "CARGA_DATOS_BLOB",
 						"type": "DatasetReference"
 					}
 				],
