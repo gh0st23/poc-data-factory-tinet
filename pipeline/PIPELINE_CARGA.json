@@ -21,7 +21,7 @@
 						"additionalColumns": [
 							{
 								"name": "ID_ENCUESTA",
-								"value": "concat(ENCUESTA, EMPRESA)"
+								"value": "concat(ENCUESTA, FECHA_INGRESO)"
 							}
 						],
 						"queryTimeout": "02:00:00",
