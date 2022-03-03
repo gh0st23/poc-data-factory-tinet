@@ -296,6 +296,14 @@
 								"sink": {
 									"path": "$['fecha_ejecucion']"
 								}
+							},
+							{
+								"source": {
+									"name": "ID_ENCUESTA"
+								},
+								"sink": {
+									"path": "$['id_encuesta']"
+								}
 							}
 						]
 					}
