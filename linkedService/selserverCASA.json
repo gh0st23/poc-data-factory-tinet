@@ -1,0 +1,16 @@
+{
+	"name": "selserverCASA",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"connectionString": "integrated security=False;data source=192.168.1.89;initial catalog=sqldbinspiradev01;user id=sa",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIxYjM4ZmYxMS1hMmM1LTQwOTYtYTYzOS0wOWU3Yjg0MGZjYTgiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "poc-ghosthost",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
